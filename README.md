@@ -169,13 +169,18 @@ Atualize o código com base no seu feedback, escolhendo a melhor solução para 
 - push . Abrir um pull request
 - SonarCloud analisa o PR
 
+
 ### SonarCloud - config
 Adicionar o sonarcloud no github https://sonarcloud.io/login (logar com o github) configurar o SonarCloud via GitHub Actions
-analyzer new project > Select all on this page (tcc_task_antigravity) > Set up > Number of days > create project
-Adminstration > Analysis Metthod > With GitHub Actions > Name = SONAR_TOKEN e Value =
+Botão + > analyzer new project > Select all on this page (nome do projeto) > Set up > Number of days - 30> create project
+Choose your Analysis Method (Adminstration) > With GitHub Actions > Name = SONAR_TOKEN e Value =
+Create a GitHub Secret > clicar em  Settings > Secrets and variables > Actions  para se renviado para o github
+Dentro do github:
+1-Actions secrets and variables > new repository secret > Name = SONAR_TOKEN e Value = > add secret
+Vontando para o sonar:
+2-Escolher o tipo do projeto> Js/ts > crie.github/workflows/build.yml > crie sonar-project.properties
+vontar em Administration / Analysis Method:
 1-Desabilitar Automatic Analysis
-2-github Actions secrets and variables > new repository secret > Name = SONAR_TOKEN e Value = > add secret
-3-Escolher o tipo do projeto> Js/ts > crie.github/workflows/build.yml > crie sonar-project.properties
 4 Security Hotspots>review se for o caso, corrigir e subir novamente > Safe (quando é falso positivo)
 
 - Dev corrige os issues do SonarCloud
