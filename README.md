@@ -64,7 +64,7 @@ Finalizado.
 No projeto:
 Para funcionar: Tem que criar um pull request 
 
-# Pipeline ideal:
+# Workflow:
 1. Crie uma branch para a tarefa
 2. Dev codifica localmente
     - 1.1 Planejamento
