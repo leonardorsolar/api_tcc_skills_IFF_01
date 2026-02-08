@@ -11,6 +11,18 @@
 # 2. Crie no github um novo projeto. crie um novo repositório.
 ```
 
+### SonarCloud - config
+Adicionar o sonarcloud no github https://sonarcloud.io/login (logar com o github) configurar o SonarCloud via GitHub Actions
+Botão + > analyzer new project > Select all on this page (nome do projeto) > Set up > Number of days - 30> create project
+Choose your Analysis Method (Adminstration) > With GitHub Actions > Name = SONAR_TOKEN e Value =
+Create a GitHub Secret > clicar em  Settings > Secrets and variables > Actions  para se renviado para o github
+Dentro do github:
+1-Actions secrets and variables > new repository secret > Name = SONAR_TOKEN e Value = > add secret
+Vontando para o sonar:
+2-Escolher o tipo do projeto> Js/ts > crie.github/workflows/build.yml > crie sonar-project.properties
+vontar em Administration / Analysis Method:
+1-Desabilitar Automatic Analysis: Tem que criar um pull request para funcionar
+
 ## 🤖 Workflow Multi-Agent para Issues Complexas
 
 Configuração:
@@ -168,20 +180,7 @@ Atualize o código com base no seu feedback, escolhendo a melhor solução para 
 
 - push . Abrir um pull request
 - SonarCloud analisa o PR
-
-
-### SonarCloud - config
-Adicionar o sonarcloud no github https://sonarcloud.io/login (logar com o github) configurar o SonarCloud via GitHub Actions
-Botão + > analyzer new project > Select all on this page (nome do projeto) > Set up > Number of days - 30> create project
-Choose your Analysis Method (Adminstration) > With GitHub Actions > Name = SONAR_TOKEN e Value =
-Create a GitHub Secret > clicar em  Settings > Secrets and variables > Actions  para se renviado para o github
-Dentro do github:
-1-Actions secrets and variables > new repository secret > Name = SONAR_TOKEN e Value = > add secret
-Vontando para o sonar:
-2-Escolher o tipo do projeto> Js/ts > crie.github/workflows/build.yml > crie sonar-project.properties
-vontar em Administration / Analysis Method:
-1-Desabilitar Automatic Analysis
-4 Security Hotspots>review se for o caso, corrigir e subir novamente > Safe (quando é falso positivo)
+Criar o pull request para o sonar analisar
 
 - Dev corrige os issues do SonarCloud
 - PR sai de Draft → Ready for Review
@@ -209,7 +208,7 @@ vontar em Administration / Analysis Method:
 
 ---
 
-## 🔍 Workflow de Code Review **Fase 5: Code Review**
+## 🔍 Workflow de Code Review 
 
 ### Fluxo Básico (80% dos casos)
 
@@ -248,8 +247,6 @@ Revise esta PR focando em:
 @code-review-checklist
 ```
 
-✅ **Se passou aqui → PR quase pronta**
-
 ---
 
 ## 🎯 Skills por Tipo de Mudança
@@ -278,36 +275,6 @@ Antes de aprovar, confirme:
 - ✔ PR está bem explicada
 
 **Se alguma resposta for "não" → não aprove.**
-
----
-
-## 🧪 Exemplo Prático de um Code Review para PR
-
-### Code Review Rápido (15 min)
-
-```text
-@code-reviewer
-
-Revise esta PR:
-- Feature: criação de usuário
-- Stack: Node + Prisma
-- Arquivos: controller, service, repository
-```
-
-Depois:
-
-```text
-@security-auditor
-```
-
-Depois:
-
-```text
-@comprehensive-review-pr-enhance
-```
-
-⏱️ **Tempo total**: ~15 minutos  
-📈 **Qualidade**: sênior
 
 ---
 
