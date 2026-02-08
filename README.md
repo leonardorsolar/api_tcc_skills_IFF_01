@@ -1,25 +1,14 @@
 # 🚀 Desenvolvimento Multi-Agent com AI
 
-> **Objetivo**: Workflow multi-agent de forma rápida, consistente e profissional.
-
----
-
-## 📋 Índice
-
-1. [Setup Inicial](#-setup-inicial)
-2. [Workflow de Code Review](#-workflow-de-code-review)
-3. [Workflow Multi-Agent para Issues Complexas](#-workflow-multi-agent-para-issues-complexas)
-4. [Skills por Tipo de Mudança](#-skills-por-tipo-de-mudança)
-5. [Checklist Final](#-checklist-final)
+> **Objetivo**: Workflow multi-agent 
 
 ---
 
 ## 🛠️ Setup Inicial
 
 ```bash
-# 1. Baixe a pasta .cursor/skills na raiz do projeto
-# 2. Confirme a instalação
-ls .cursor/skills/skills/
+# 1. Baixe a pasta .prompts na raiz do projeto contendo os prompts (skills)
+# 2. Crie no github um novo projeto. crie um novo repositório.
 ```
 
 ## 🤖 Workflow Multi-Agent para Issues Complexas
@@ -30,24 +19,18 @@ Configuração:
 git checkout -b feature/issue001
 ```
 
-### **Fase 1: Planejamento** (Claude Sonnet 4.5/4.6) Mode: Plan
+### **Fase 1: Planejamento** (Claude Sonnet 4.5/4.6) 
 
-- Use MCP do Jira para importar a issue
-- A IA cria um **plano de implementação em Markdown**
-- Plano curto, direto e organizado
-- **Sem código ainda, só estratégia**
+- Criar um plano da implementação
 
-Prompt 1:
+Prompt 1: Nova janela de contexto Mode: Plan Sonnet 4.5
 ```text
-Crie um plano de implementação para a issue...
-Entregáveis (conciso, sem enrolação):
-- Decisões de UX
-- Performance
+Crie um plano de implementação para a criar uma api em node express javascript com a rota get Hello World
 Pare após o plano. Aguarde revisão antes de escrever qualquer código.
 ```
-Prompt 2:
+Prompt 2: Mode: Agent Sonnet 4.5
 ```text
-Dentro da pasta plan, escreva este plano na raiz do projeto com o título plan_issue0001_claude em markdown.
+Dentro da pasta plan, escreva este plano na raiz do projeto com o título plan_issue0001 em markdown.
 ```
 
 **Escolha do modelo:**
@@ -56,54 +39,45 @@ Dentro da pasta plan, escreva este plano na raiz do projeto com o título plan_i
 
 ---
 
-### **Fase 2: Revisão do Plano -Opcional** (GPT-5.2/5.3 Codex) Mode: Agent
+### **Fase 2: Revisão do Plano - Opcional** (GPT-5.2/5.3 Codex) Mode: Agent
 
 - Outra IA revisa o plano
-- Verifica:
-  - Segurança de tipos (TypeScript)
-  - Interação entre componentes
-  - Possíveis melhorias
-- Sugere ajustes **antes de codar**
 
-👉 Evita erros de arquitetura
-
-Prompt 1: Nova janela de contexto
+Prompt 1: Nova janela de contexto Mode: Agent
 ```text
-Revise @plan_issue0001_claude.md de forma aprofundada.
+Revise #plan_issue0001.md de forma aprofundada.
 Indique o que está sólido, possíveis riscos e oportunidades claras de melhoria.
 Seja objetivo, crítico e não escreva código.
 ```
 
-Prompt 2: 
+Prompt 2:  Mode: Agent
 ```text
-Por favor, aplique isso e o restante do seu feedback ao arquivo do plano @plan_issue0001_claude.md
+Por favor, aplique isso e o restante do seu feedback ao arquivo do plano @plan_issue0001.md
 Não escreva código.
 ```
 
 ---
 
----
+### **Fase 3: Segunda Opinião - Opcional** (Claude Opus 4.6/Claude Sonnet 4.5/4.6) Mode: Agent
 
-### **Fase 3: Segunda Opinião - Opcional** (Claude Opus 4.6) Mode: Agent
-
-- Claude revisa o plano **já corrigido**
-- Confirma se está **pronto para produção**
+- revisar o plano **já corrigido**
 - Valida arquitetura e decisões técnicas
 
-Prompt 1: Nova janela de contexto
+Prompt 1: Nova janela de contexto Mode: Agent
 ```text
-Fiz alterações no plano @plan_issue0001_claude.md.
+Fiz alterações no plano #plan_issue0001.md.
 Você pode revisar as mudanças que fiz e fornecer feedback?
+Validar arquitetura e decisões técnicas
 ```
-Prompt 2: 
+Prompt 2:  Mode: Agent
 ```text
 Aplique todo o feedback diretamente no plano
-@plan_issue0001_claude.md.
+#plan_issue0001.md.
 Não escreva código.
 ```
 ---
 
-### **Fase 4: Build** (Composer / Codex / Sonnet 4.6) Mode: Agent
+### **Fase 4: Implementação - Build** (Composer / Codex / Sonnet 4.6/4.5) Mode: Agent
 
 Escolha conforme a necessidade:
 
@@ -113,9 +87,9 @@ Escolha conforme a necessidade:
 | **GPT-5 Codex** | Build de produção | 🐢 Lento | ⭐⭐⭐⭐⭐ |
 | **Sonnet 4.6** | Equilíbrio | 🚀 Médio | ⭐⭐⭐⭐ |
 
-Prompt 1: Nova janela de contexto
+Prompt 1: Nova janela de contexto Mode: Agent
 ```text
-Implemente o plano @plan_issue0001_claude.md. 
+Implemente o plano #plan_issue0001.md. 
 Vocẽ não deve utilizar comentários no arquivo.
 ```
 
@@ -123,23 +97,23 @@ Vocẽ não deve utilizar comentários no arquivo.
 
 ### **Fase 5: Revisão manual** 
 
+- Entender o que foi realizado em relação ao plano
 - Revisar o que foi inserido
 - Aprovar o código 
 
 ---
 
-### **Fase 6: Code Review com IA** (GPT-5 Codex ou Opus 4.6) Mode: Agent
+### **Fase 6: Revisão de código com IA** (GPT-5 Codex ou Opus 4.6) 
 
-- Commit realizado
-- Codex revisa o código gerado
+- git add, Commit e push
 - Fase 0: Detecção de Bugs: Encontra bugs **antes de rodar o projeto**
 - Fase 1: Review Geral: Valida padrões e boas práticas
 
-Prompt 1: Nova janela de contexto
+Prompt 1: Nova janela de contexto Mode: Agent
 ```text
-Acabei de implementar este plano  @plan_issue0001_claude.md.
+Acabei de implementar este plano  #plan_issue0001.md.
 
-@find-bugs
+#find-bugs
 
 Nesta Branch feature/issue001, encontre bugs, vulnerabilidades e problemas de qualidade no branch atual. 
 Priorize por severidade:
