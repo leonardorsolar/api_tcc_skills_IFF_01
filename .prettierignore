@@ -1,0 +1,6 @@
+.prompts/
+plan/
+node_modules/
+coverage/
+dist/
+build/

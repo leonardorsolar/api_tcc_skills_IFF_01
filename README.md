@@ -1,6 +1,6 @@
 # 🚀 Desenvolvimento Multi-Agent com AI
 
-> **Objetivo**: Workflow multi-agent 
+> **Objetivo**: Workflow multi-agent
 
 ---
 
@@ -14,26 +14,31 @@
 ## 🤖 Workflow Multi-Agent para Issues Complexas
 
 Configuração:
+
 ```bash
 # Crie uma branch para a tarefa
 git checkout -b feature/issue001
 ```
 
-### **Fase 1: Planejamento** (Claude Sonnet 4.5/4.6) 
+### **Fase 1: Planejamento** (Claude Sonnet 4.5/4.6)
 
 - Criar um plano da implementação
 
 Prompt 1: Nova janela de contexto Mode: Plan Sonnet 4.5
+
 ```text
 Crie um plano de implementação para a criar uma api em node express javascript com a rota get Hello World
 Pare após o plano. Aguarde revisão antes de escrever qualquer código.
 ```
+
 Prompt 2: Mode: Agent Sonnet 4.5
+
 ```text
 Dentro da pasta plan, escreva este plano na raiz do projeto com o título plan_issue0001 em markdown.
 ```
 
 **Escolha do modelo:**
+
 - **Sonnet 4.5/4.6**: maioria dos casos (equilíbrio velocidade/qualidade)
 - **Opus 4.5/4.6**: issues muito complexas que exigem raciocínio profundo
 
@@ -44,13 +49,15 @@ Dentro da pasta plan, escreva este plano na raiz do projeto com o título plan_i
 - Outra IA revisa o plano
 
 Prompt 1: Nova janela de contexto Mode: Agent
+
 ```text
 Revise #plan_issue0001.md de forma aprofundada.
 Indique o que está sólido, possíveis riscos e oportunidades claras de melhoria.
 Seja objetivo, crítico e não escreva código.
 ```
 
-Prompt 2:  Mode: Agent
+Prompt 2: Mode: Agent
+
 ```text
 Por favor, aplique isso e o restante do seu feedback ao arquivo do plano @plan_issue0001.md
 Não escreva código.
@@ -64,58 +71,65 @@ Não escreva código.
 - Valida arquitetura e decisões técnicas
 
 Prompt 1: Nova janela de contexto Mode: Agent
+
 ```text
 Fiz alterações no plano #plan_issue0001.md.
 Você pode revisar as mudanças que fiz e fornecer feedback?
 Validar arquitetura e decisões técnicas
 ```
-Prompt 2:  Mode: Agent
+
+Prompt 2: Mode: Agent
+
 ```text
 Aplique todo o feedback diretamente no plano
 #plan_issue0001.md.
 Não escreva código.
 ```
+
 ---
 
 ### **Fase 4: Implementação - Build** (Composer / Codex / Sonnet 4.6/4.5) Mode: Agent
 
 Escolha conforme a necessidade:
 
-| Modelo | Quando Usar | Velocidade | Qualidade |
-|--------|-------------|------------|-----------|
-| **Composer** | Prototipagem rápida | ⚡ < 90s | ⭐⭐⭐ |
-| **GPT-5 Codex** | Build de produção | 🐢 Lento | ⭐⭐⭐⭐⭐ |
-| **Sonnet 4.6** | Equilíbrio | 🚀 Médio | ⭐⭐⭐⭐ |
+| Modelo          | Quando Usar         | Velocidade | Qualidade  |
+| --------------- | ------------------- | ---------- | ---------- |
+| **Composer**    | Prototipagem rápida | ⚡ < 90s   | ⭐⭐⭐     |
+| **GPT-5 Codex** | Build de produção   | 🐢 Lento   | ⭐⭐⭐⭐⭐ |
+| **Sonnet 4.6**  | Equilíbrio          | 🚀 Médio   | ⭐⭐⭐⭐   |
 
 Prompt 1: Nova janela de contexto Mode: Agent
+
 ```text
-Implemente o plano #plan_issue0001.md. 
+Implemente o plano #plan_issue0001.md.
 Vocẽ não deve utilizar comentários no arquivo.
 ```
 
 ---
 
-### **Fase 5: Revisão manual** 
+### **Fase 5: Revisão manual**
 
 - Entender o que foi realizado em relação ao plano
 - Revisar o que foi inserido
-- Aprovar o código 
+- Aprovar o código
 
 ---
 
-### **Fase 6: Revisão de código com IA** (GPT-5 Codex ou Opus 4.6) 
+### **Fase 6: Revisão de código com IA** (GPT-5 Codex ou Opus 4.6/4.5)
 
-- git add, Commit e push
+- git add, Commit
+- Análise do código antes do pull request
 - Fase 0: Detecção de Bugs: Encontra bugs **antes de rodar o projeto**
 - Fase 1: Review Geral: Valida padrões e boas práticas
 
 Prompt 1: Nova janela de contexto Mode: Agent
+
 ```text
 Acabei de implementar este plano  #plan_issue0001.md.
 
 #find-bugs
 
-Nesta Branch feature/issue001, encontre bugs, vulnerabilidades e problemas de qualidade no branch atual. 
+Nesta Branch feature/issue001, encontre bugs, vulnerabilidades e problemas de qualidade no branch atual.
 Priorize por severidade:
 1. Crítico - Bloqueia merge
 2. Alto - Deve ser corrigido
@@ -124,14 +138,16 @@ Priorize por severidade:
 ```
 
 Prompt 1.1: Caso tenha encontrado algo
+
 ```text
 Atualize o código com base no seu feedback, escolhendo a melhor solução para a questão em aberto.
 ```
 
 Prompt 2:
+
 ```text
-@code-reviewer
-Revise o trabalho do Composer e forneça seu feedback.
+#requesting-code-review
+Revise o trabalho e forneça seu feedback.
 Revise esta Branch feature/issue001 focando em:
 - Qualidade do código
 - Bugs
@@ -141,35 +157,50 @@ Revise esta Branch feature/issue001 focando em:
 ```
 
 Prompt 2.1: Caso tenha encontrado algo
+
 ```text
 Atualize o código com base no seu feedback, escolhendo a melhor solução para a questão em aberto.
 ```
 
 🔥 Grande vantagem: menos bugs em dev
 
+### **Fase 6: Pull Request**
 
-### **Fase 6: Pull Request** 
-
-- Em construção : push
+- push . Abrir um pull request
 - SonarCloud analisa o PR
+
+### SonarCloud - config
+Adicionar o sonarcloud no github https://sonarcloud.io/login (logar com o github) configurar o SonarCloud via GitHub Actions
+analyzer new project > Select all on this page (tcc_task_antigravity) > Set up > Number of days > create project
+Adminstration > Analysis Metthod > With GitHub Actions > Name = SONAR_TOKEN e Value =
+1-Desabilitar Automatic Analysis
+2-github Actions secrets and variables > new repository secret > Name = SONAR_TOKEN e Value = > add secret
+3-Escolher o tipo do projeto> Js/ts > crie.github/workflows/build.yml > crie sonar-project.properties
+4 Security Hotspots>review se for o caso, corrigir e subir novamente > Safe (quando é falso positivo)
+
 - Dev corrige os issues do SonarCloud
 - PR sai de Draft → Ready for Review
-- Code Review (revisão humana)
+
+### **Fase 7: Code Review**
+
+- Code Review (revisão humana por outro programador)
+
+### **Fase 8: Quality Gate**
+
 - Quality Gate aprovado → Merge
 
 ---
 
 ## 🎯 Modelos Recomendados por Fase
 
-| Fase | Modelo Principal | Alternativa | Quando Usar |
-|------|-----------------|-------------|-------------|
-| **Planejamento** | Sonnet 4.6 | Opus 4.6 | Issues complexas |
-| **Revisão do plano** | GPT-5 Codex | Opus 4.5/4.6 | Validação técnica |
-| **Segunda opinião** | Opus 4.6 | Sonnet 4.6 | Validação final |
-| **Build rápido** | Composer | Sonnet 4.6 | Prototipagem |
-| **Build produção** | GPT-5 Codex | Opus/Sonnet 4.6 | Código final |
-| **Code Review** | GPT-5 Codex | Opus 4.6 | Revisão final |
-
+| Fase                 | Modelo Principal | Alternativa     | Quando Usar       |
+| -------------------- | ---------------- | --------------- | ----------------- |
+| **Planejamento**     | Sonnet 4.6       | Opus 4.6        | Issues complexas  |
+| **Revisão do plano** | GPT-5 Codex      | Opus 4.5/4.6    | Validação técnica |
+| **Segunda opinião**  | Opus 4.6         | Sonnet 4.6      | Validação final   |
+| **Build rápido**     | Composer         | Sonnet 4.6      | Prototipagem      |
+| **Build produção**   | GPT-5 Codex      | Opus/Sonnet 4.6 | Código final      |
+| **Code Review**      | GPT-5 Codex      | Opus 4.6        | Revisão final     |
 
 ---
 
@@ -218,16 +249,15 @@ Revise esta PR focando em:
 
 ## 🎯 Skills por Tipo de Mudança
 
-| Tipo de Mudança | Skills Recomendadas |
-|-----------------|---------------------|
-| 🆕 Nova Feature | `@code-reviewer` + `@architect-review` |
-| 🐛 Bug Fix | `@find-bugs` + `@debugger` + `@code-reviewer` |
-| 🔒 Código Sensível | `@security-auditor` + `@code-reviewer` |
-| ♻️ Refatoração | `@code-refactoring-refactor-clean` + `@architect-review` |
-| 📦 Atualização de Deps | `@dependency-upgrade` + `@codebase-cleanup-deps-audit` |
-| 🚀 Migration | `@framework-migration-code-migrate` + `@legacy-modernizer` |
-| 🔍 Buscar Bugs | `@find-bugs` + `@error-detective` |
-
+| Tipo de Mudança        | Skills Recomendadas                                        |
+| ---------------------- | ---------------------------------------------------------- |
+| 🆕 Nova Feature        | `@code-reviewer` + `@architect-review`                     |
+| 🐛 Bug Fix             | `@find-bugs` + `@debugger` + `@code-reviewer`              |
+| 🔒 Código Sensível     | `@security-auditor` + `@code-reviewer`                     |
+| ♻️ Refatoração         | `@code-refactoring-refactor-clean` + `@architect-review`   |
+| 📦 Atualização de Deps | `@dependency-upgrade` + `@codebase-cleanup-deps-audit`     |
+| 🚀 Migration           | `@framework-migration-code-migrate` + `@legacy-modernizer` |
+| 🔍 Buscar Bugs         | `@find-bugs` + `@error-detective`                          |
 
 ---
 
@@ -246,7 +276,7 @@ Antes de aprovar, confirme:
 
 ---
 
-## 🧪 Exemplo Prático  de um Code Review para PR
+## 🧪 Exemplo Prático de um Code Review para PR
 
 ### Code Review Rápido (15 min)
 
@@ -289,11 +319,13 @@ Depois:
 ## 💡 Dicas Práticas
 
 ### Para Code Review
+
 - Use `@find-bugs` antes de revisar para detectar problemas automaticamente
 - Sempre classifique issues por severidade
 - Não aprove se algum item do checklist falhar
 
 ### Para Workflow Multi-Agent
+
 - Peça planos **"concise"** para o Claude
 - Use Composer para iterar rápido
 - Use Codex para builds finais
@@ -307,12 +339,14 @@ Depois:
 ## 📊 Quando Usar Cada Modelo Claude
 
 ### Sonnet 4.5/4.6
+
 - Issues de complexidade média
 - Prototipagem rápida
 - Refatorações
 - Implementações com padrões estabelecidos
 
 ### Opus 4.5/4.6
+
 - Arquiteturas complexas
 - Decisões críticas de design
 - Otimizações de performance
@@ -327,7 +361,7 @@ Depois:
 ✅ Código mais limpo  
 ✅ Iteração muito mais rápida  
 ✅ Cada IA usada no que faz melhor  
-✅ Code review de nível sênior consistente  
+✅ Code review de nível sênior consistente
 
 ---
 
@@ -336,11 +370,11 @@ Depois:
 👉 **AI Skills não substituem você.**
 
 Elas:
+
 - Ampliam visão
 - Reduzem esquecimento
 - Aceleram análise
 
 **A decisão final é sempre sua.**
-
 
 Fonte: https://github.com/sickn33/antigravity-awesome-skills
